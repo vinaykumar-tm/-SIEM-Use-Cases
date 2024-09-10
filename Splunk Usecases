@@ -1,8 +1,43 @@
 Splunk Use cases 
 
-1. USER ACCESS PRIVILEGE AUDITS
+1. #USER ACCESS PRIVILEGE AUDITS#
 **Purpose** Identify unusual changes to user privileges. This helps ensure users don’t have unnecessary access to sensitive data. OutcomeOutcome2 Audit changes to user access privileges as mandated by PCI DSS v4.0 7.1.2
 
 Example query
-#index=* (sourcetype=wineventlog:Security OR
-sourcetype=linux_audit) "privilege change# 
+#index=* (sourcetype=wineventlog:Security OR sourcetype=linux_audit) "privilege change# 
+
+Outcome: Identify unusual changes to user privileges. This helps ensure users don’t have unnecessary access to sensitive data.
+
+2. #FAILED LOGIN ATTEMPTS#
+PurposePurpose: Detect failed login attempts that may indicate brute-force attacks, as per PCI DSS v4.0 8.3.5
+
+Example query: 
+index=* (sourcetype=wineventlog OR sourcetype=linux_secure) EventCode=4625 OR "auth failure"
+
+Outcome: Identify multiple failed login attempts to prevent unauthorized access. Helps detect potential brute-force attacks
+
+3.#UNSUCCESSFUL PAYMENT TRANSACTIONS#
+
+Purpose: Track unsuccessful payment transactions as required by PCI DSS v4.0 3.2.4
+
+Example query
+index=* (sourcetype=linux_secure OR sourcetype=sysmon) "payment" status="failed"
+
+Outcome: Identify failed transactions and potential fraud indicators. Helps mitigate risks related to transaction failures.
+
+4. #ACCESS FROM UNUSUAL 
+Purpose: Monitor access to systems from unexpected geographic locations in line with PCI DSS v4.0 8.6
+Example query:
+index=* (sourcetype=wineventlog OR sourcetype=pan: traffic) dest_ip!="allowed_location"
+
+Outcome: Detect unauthorized access attempts from unfamiliar geographic locations. Helps prevent security breaches from foreign access.
+
+5. CARDHOLDER DATA ACCESS MONITORING
+
+Purpose: Track access to cardholder data as required by PCI DSS v4.0 3.1
+
+Example query
+index=* (sourcetype=wineventlog OR sourcetype=linux_secure OR sourcetype=sysmon) "cardholder_data"
+
+Outcome: Detect which users accessed cardholder data and when. Helps ensure that only authorized individuals have access.
+
