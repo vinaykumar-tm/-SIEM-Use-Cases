@@ -1,0 +1,8 @@
+Splunk Use cases 
+
+1. USER ACCESS PRIVILEGE AUDITS
+**Purpose** Identify unusual changes to user privileges. This helps ensure users don’t have unnecessary access to sensitive data. OutcomeOutcome2 Audit changes to user access privileges as mandated by PCI DSS v4.0 7.1.2
+
+Example query
+#index=* (sourcetype=wineventlog:Security OR
+sourcetype=linux_audit) "privilege change# 
